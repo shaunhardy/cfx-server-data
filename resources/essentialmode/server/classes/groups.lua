@@ -10,6 +10,10 @@ groups = {}
 Group = {}
 Group.__index = Group
 
+-- Allowing better inheritance
+local _user = 'user'
+local _admin = 'admin'
+
 -- Meta table for groups
 setmetatable(Group, {
 	__eq = function(self)
@@ -77,10 +81,6 @@ superadmin = Group("superadmin", "admin")
 
 -- Developer, unused
 dev = Group("_dev", "superadmin")
-
--- Allowing better inheritance
-local _user = 'user'
-local _admin = 'admin'
 
 -- Custom groups
 AddEventHandler("es:addGroup", function(group, inherit, aceGroup)

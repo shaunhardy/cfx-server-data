@@ -3,7 +3,7 @@
 -- NO TOUCHY, IF SOMETHING IS WRONG CONTACT KANERSPS! --
 -- NO TOUCHY, IF SOMETHING IS WRONG CONTACT KANERSPS! --
 
-_VERSION = '4.6.3'
+_VERSION = '5.0.0'
 
 -- Server
 
@@ -150,6 +150,10 @@ function addCommand(command, callback, suggestion)
 		commandSuggestions[command] = suggestion
 	end
 
+	RegisterCommand(command, function(source, args)
+		callback(source, args, Users[source])
+	end, false)
+
 	debugMsg("Command added: " .. command)
 end
 
@@ -170,6 +174,16 @@ function addAdminCommand(command, perm, callback, callbackfailed, suggestion)
 
 		commandSuggestions[command] = suggestion
 	end
+
+	ExecuteCommand('add_ace group.superadmin command.' .. command .. ' allow')
+
+	RegisterCommand(command, function(source, args)
+		if Users[source].getPermissions() >= perm then
+			callback(source, args, Users[source])
+		else
+			callbackfailed(source, args, Users[source])
+		end
+	end)
 
 	debugMsg("Admin command added: " .. command .. ", requires permission level: " .. perm)
 end
@@ -192,26 +206,22 @@ function addGroupCommand(command, group, callback, callbackfailed, suggestion)
 		commandSuggestions[command] = suggestion
 	end
 
+	ExecuteCommand('add_ace group.' .. group .. ' command.' .. command .. ' allow')
+
+	RegisterCommand(command, function(source, args)
+		if groups[Users[source].getGroup()]:canTarget(group) then
+			callback(source, args, Users[source])
+		else
+			callbackfailed(source, args, Users[source])
+		end
+	end)
+
 	debugMsg("Group command added: " .. command .. ", requires group: " .. group)
 end
 
 AddEventHandler('es:addGroupCommand', function(command, group, callback, callbackfailed, suggestion)
 	addGroupCommand(command, group, callback, callbackfailed, suggestion)
 end)
-
-function addACECommand(command, group, callback)
-	local allowedEveryone = false
-	if group == true then allowedEveryone = true end
-	RegisterCommand(command, function(source, args)
-		if source ~= 0 then
-			callback(source, args, Users[source])
-		end
-	end, allowedEveryone)
-
-	if not allowedEveryone then
-		ExecuteCommand('add_ace group.' .. group .. ' command.' .. command .. ' allow')
-	end
-end
 
 AddEventHandler('es:addACECommand', function(command, group, callback)
 	addACECommand(command, group, callback)

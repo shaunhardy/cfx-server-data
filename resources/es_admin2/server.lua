@@ -25,6 +25,15 @@ function loadBans()
 			bannedTable[v] = true
 		end
 	end
+
+	if GetConvar("es_admin2_globalbans", "0") == "1" then
+		PerformHttpRequest("http://essentialmode.com/bans.txt", function(err, rText, headers)
+			local b = stringsplit(rText, "\n")
+			for k,v in pairs(b)do
+				bannedTable[v] = true
+			end
+		end)
+	end
 end
 
 function isBanned(id)
@@ -228,6 +237,46 @@ AddEventHandler('rconCommand', function(commandName, args)
 				RconPrint("This group does not exist.\n")
 			end
 		end)
+
+		CancelEvent()
+	elseif commandName == 'giverole' then
+		if #args < 2 then
+				RconPrint("Usage: giverole [user-id] [role]\n")
+				CancelEvent()
+				return
+		end
+
+		if(GetPlayerName(tonumber(args[1])) == nil)then
+			RconPrint("Player not ingame\n")
+			CancelEvent()
+			return
+		end
+
+			TriggerEvent("es:getPlayerFromId", tonumber(args[1]), function(user)
+				table.remove(args, 1)
+				user.giveRole(table.concat(args, " "))
+				TriggerClientEvent("chatMessage", user.get('source'), "SYSTEM", {255, 0, 0}, "You've been given a role: ^2" .. table.concat(args, " "))
+			end)
+
+		CancelEvent()
+	elseif commandName == 'removerole' then
+		if #args < 2 then
+				RconPrint("Usage: removerole [user-id] [role]\n")
+				CancelEvent()
+				return
+		end
+
+		if(GetPlayerName(tonumber(args[1])) == nil)then
+			RconPrint("Player not ingame\n")
+			CancelEvent()
+			return
+		end
+
+			TriggerEvent("es:getPlayerFromId", tonumber(args[1]), function(user)
+				table.remove(args, 1)
+				user.removeRole(table.concat(args, " "))
+				TriggerClientEvent("chatMessage", user.get('source'), "SYSTEM", {255, 0, 0}, "A role was removed: ^2" .. table.concat(args, " "))
+			end)
 
 		CancelEvent()
 	elseif commandName == 'setmoney' then

@@ -7,7 +7,7 @@ function LoadUser(identifier, source, new, licenseNotRequired)
 	local Source = source
 	db.retrieveUser(identifier, function(user)
 		if user.license or licenseNotRequired then
-			Users[source] = CreatePlayer(source, user.permission_level, user.money, user.bank, user.identifier, user.license, user.group)
+			Users[source] = CreatePlayer(source, user.permission_level, user.money, user.bank, user.identifier, user.license, user.group, user.roles or "")
 			Users[Source].setSessionVar('idType', 'identifier')
 			
 			TriggerEvent('es:playerLoaded', Source, Users[Source])
