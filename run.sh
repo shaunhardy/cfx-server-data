@@ -5,5 +5,4 @@ exec /opt/cfx-server/proot \
     -R /opt/cfx-server/alpine/ \
     /opt/cfx-server/FXServer \
     +set citizen_dir /opt/cfx-server/citizen/ \
-    +exec server.cfg \
-    >> /opt/server-data/logs/server.log
+    +exec server.cfg
