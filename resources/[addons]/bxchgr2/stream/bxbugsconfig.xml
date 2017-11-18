@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Bxbugs123 (10/4/2016) -->
+<CDataFileMgr__ContentsOfDataFileXml>
+  <disabledFiles />
+  <includedXmlFiles />
+  <includedDataFiles />
+  <dataFiles>
+    <Item>
+      <filename>dlc_bxchgr2:/dash/carcols.meta</filename>
+      <fileType>CARCOLS_FILE</fileType>
+      <overlay value="false" />
+      <disabled value="true" />
+      <persistent value="false" />
+    </Item>
+    <Item>
+      <filename>dlc_bxchgr2:/dash/carvariations.meta</filename>
+      <fileType>VEHICLE_VARIATION_FILE</fileType>
+      <overlay value="false" />
+      <disabled value="true" />
+      <persistent value="false" />
+    </Item>
+    <Item>
+      <filename>dlc_bxchgr2:/dash/dlctext.meta</filename>
+      <fileType>TEXTFILE_METAFILE</fileType>
+      <overlay value="false" />
+      <disabled value="true" />
+      <persistent value="false" />
+    </Item>
+    <Item>
+      <filename>dlc_bxchgr2:/%PLATFORM%/levels/gta5/vehicles.rpf</filename>
+      <fileType>RPF_FILE</fileType>
+		<locked value="true"/>
+		<disabled value="true"/>
+		<persistent value="true"/>
+		<overlay value="true"/>
+    </Item>
+  </dataFiles>
+  <contentChangeSets>
+	<Item>
+	  <changeSetName>bxchgr2_AUTOGEN</changeSetName>
+	  <filesToDisable />
+	  <filesToEnable>
+        <Item>dlc_bxchgr2:/dash/carcols.meta</Item>
+        <Item>dlc_bxchgr2:/dash/carvariations.meta</Item>
+        <Item>dlc_bxchgr2:/dash/dlctext.meta</Item>	
+        <Item>dlc_bxchgr2:/%PLATFORM%/levels/gta5/vehicles.rpf</Item>
+	  </filesToEnable>
+	  <txdToLoad />
+	  <txdToUnload />
+	  <residentResources />
+	  <unregisterResources />
+	</Item>
+  </contentChangeSets>
+  <patchFiles />
+</CDataFileMgr__ContentsOfDataFileXml>
